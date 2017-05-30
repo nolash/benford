@@ -3,7 +3,7 @@ BUILDDIR = ../../.build
 
 test: 
 	$(CC) -Wall -g -I$(INCLUDE) -o $(BUILDDIR)/benford_test.o -c benford_test.c
-	$(CC) -Wall -o benford_test $(BUILDDIR)/benford.o $(BUILDDIR)/benford_test.o -lm
+	$(CC) -Wall -o $(BUILDDIR)/benford_test $(BUILDDIR)/benford.o $(BUILDDIR)/benford_test.o -lm
 	
 #shared:
 
