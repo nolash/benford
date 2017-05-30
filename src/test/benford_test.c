@@ -4,7 +4,7 @@
 
 #include "benford.h"
 
-#define TESTCOUNT 100
+#define TESTCOUNT 200
 
 int setLead() {
 	long int t = 123456;
@@ -43,7 +43,7 @@ int getLeads(int count) {
 	return 0;
 }
 
-int getNumbers(int count) {
+int getInts(int count) {
 	int i;
 	
 	long int min = 123;
@@ -65,6 +65,28 @@ int getNumbers(int count) {
 	return 0;
 }
 
+int getFloats(int count) {
+	int i;
+	
+	float min = 123.f;
+	float max = 123455.f;
+	
+	char* leads = malloc(sizeof(char) * count);
+	getSequence(leads, count);
+	
+	benford_t* bf = benford_new();
+	
+	for (i = 0; i < TESTCOUNT; i++) {
+		float n = ((float)rand() / (float)RAND_MAX) * (max - min) + min;
+		float r = n;
+		benford_setf(bf, &r);
+		printf("%i: [%i?] %.3f -> %.3f\n", i, *(leads+i) + 1, n, r);
+	}
+	
+	benford_free(bf);
+	return 0;
+}
+
 int main() {
 	int e;
 	
@@ -76,8 +98,11 @@ int main() {
 	if ((e = getLeads(TESTCOUNT)) > 0) {
 		return e;
 	}
-	if ((e = getNumbers(TESTCOUNT)) > 0) {
+	if ((e = getInts(TESTCOUNT)) > 0) {
 		return e;
 	} 
+	if ((e = getFloats(TESTCOUNT)) > 0) {
+		return e;
+	}
 	return 0;
 }

@@ -1,9 +1,20 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "benford.h"
 
-float benford_distribution[9] = {0.16, 0.14, 0.13, 0.12, 0.11, 0.10, 0.09, 0.08, 0.07};
+float benford_distribution[9] = {
+	0.301, // 1
+	0.176, // 2
+	0.125, // 3
+	0.097, // 4
+	0.079, // 5
+	0.067, // 6
+	0.058, // 7 
+	0.051, // 8
+	0.046  // 9
+};
 
 void benford_setLead_(long int* subject, int lead) {
 	char order;
@@ -20,6 +31,20 @@ int benford_set(benford_t* bf, long int* number) {
 	
 	lead = benford_nextLead_(bf);
 	benford_setLead_(number, lead + 1);
+	
+	return 0;
+}
+
+int benford_setf(benford_t* bf, float* number) {
+	float intpart, decpart;
+	long int intnumber;
+	
+	decpart = modff(*number, &intpart);
+	intnumber = (int)intpart;
+	
+	benford_set(bf, &intnumber);
+	
+	*number = (float)intnumber + decpart;
 	
 	return 0;
 }

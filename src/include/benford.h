@@ -9,6 +9,7 @@ typedef struct benford {
 benford_t* benford_new();
 void benford_free(benford_t* bf);
 int benford_set(benford_t* bf, long int* number);
+int benford_setf(benford_t* bf, float* number);
 
 // private functions
 void benford_setLead_(long int* subject, int lead);
